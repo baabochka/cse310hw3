@@ -123,74 +123,8 @@ def print_loss(ports):
         for key in dup_loss:
             if dup_loss[key] >= 3:
                 dup_tx_count += 1
-        print "Lost packets/Lost due to re-TX: ", re_tx_cnt, "/", dup_tx_count
+        print "Lost packets/Lost due to re-TX/Lost due to timeout: ", re_tx_cnt, "/", dup_tx_count, "/", re_tx_cnt - dup_tx_count
         print "Loss rate for port ", port, ": ", 1.0 * re_tx_cnt / total_rx_cnt
-                # if tcp.sport == port or tcp.dport == port:
-                #     if conn_init_counter % 300 == 0:
-                #         print "Outer for counter: ", conn_init_counter, "Current sequence: ", tcp.seq, " PORT ", port
-                #     if set_init_ts == 0:
-                #         init_ts = ts
-                #         set_init_ts = 1
-                #     if conn_init_counter < 2:
-                #         rtt = ts - prev_ts
-                #         prev_ts = ts
-                #         rto = 2.5*rtt
-                #         print "RTT: ", rtt, " port: ", port, " count  ", conn_init_counter, " ts: ", ts-init_ts, " ", prev_ts-init_ts
-                #         conn_init_counter += 1
-                #     else:
-                #         conn_init_counter += 1
-                #         if (tcp.sport == 80):
-                #             continue
-                #         seq = tcp.seq
-                #         laf[port][1] += 1
-                #         if set_init_seq == 0:
-                #             init_seq = seq
-                #             set_init_seq = 1
-                #         ack = seq + len(tcp.data)
-                #         ts_start = ts
-                #         count = 1
-                #         for ts, pkt in dpkt.pcap.Reader(open(FILENAME, 'rb')):
-                #             if dpkt.ethernet.Ethernet(pkt).type != dpkt.ethernet.ETH_TYPE_IP:
-                #                 continue
-                #             if dpkt.ethernet.Ethernet(pkt).data.p == dpkt.ip.IP_PROTO_TCP:
-                #                 if (ts < ts_start):
-                #                     continue
-                #                 tcp_internal = dpkt.ethernet.Ethernet(pkt).data.data
-                #                 if tcp_internal.sport == port or tcp_internal.dport == port:
-                #                     if tcp_internal.dport == port:
-                #                         if count == 1:
-                #                             dup_ack[0] = tcp_internal.ack
-                #                             count += 1
-                #                         elif count == 2:
-                #                             dup_ack[1] = tcp_internal.ack
-                #                             count += 1
-                #                         elif count == 3:
-                #                             dup_ack[2] = tcp_internal.ack
-                #                             count += 1
-                #                         elif count > 3:
-                #                             dup_ack[0] = dup_ack[1]
-                #                             dup_ack[1] = dup_ack[2]
-                #                             dup_ack[2] = tcp_internal.ack
-                #                     if dup_ack[0] == dup_ack[1] and dup_ack[0] == dup_ack[2] and count > 3:
-                #                         print "Dup ack occured on packet with seq number ", seq-init_seq+1
-                #                         laf[port][0] += 1
-                #                         break
-                #                         print "Didn't go for a break after"
-                #                         exit()
-                #                     if tcp_internal.ack == ack and ts <= ts_start + rto:
-                #                         print "Received ack ", ack-init_seq+1, " at ts: ", ts - init_ts, " diff between ts and RTO: ", ts - (ts_start + rto)
-                #                         # rto = 2 * calculate_rtt(rto/2, ts - ts_start)
-                #                         break
-                #                     elif tcp_internal.ack != ack and ts <= ts_start + rto:
-                #                         continue
-                #                     else:
-                #                         print "Timeout occured on packet with seq number ", seq-init_seq+1, " I didn't receive an ack ", ack - init_seq
-                #                         # print "Time: ", ts - init_ts, "limit: ", ts_start + rto - init_ts
-                #                         laf[port][0] += 1
-                #                         break
-    # for port in ports:
-    #     print "Estimated loss:", (loss[port][0]*1.0)/loss[port][1], " loss: ", loss[port][0], " total packets: ", loss[port][1]
-    # return loss
 
 def print_cwnd(ports):
     cwnd = {}
